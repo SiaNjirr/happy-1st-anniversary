@@ -145,7 +145,8 @@
     <header class="fixed top-0 left-0 right-0 z-50 px-4 py-3 sm:px-8 flex items-center justify-between pointer-events-none">
         <div class="pointer-events-auto flex items-center gap-2 glass-card px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border border-white/20 shadow-lg backdrop-blur-md">
             <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span>
-            <span class="bg-gradient-to-r from-pink-400 to-purple-300 bg-clip-text text-transparent font-bold">OUR JOURNEY</span>
+            <!-- MOD 1: Text OUR JOURNEY diubah -->
+            <span class="bg-gradient-to-r from-pink-400 to-purple-300 bg-clip-text text-transparent font-bold">OUR JOURNEY 💖</span>
         </div>
 
         <div class="pointer-events-auto flex items-center gap-2">
@@ -537,7 +538,19 @@
                         <i data-lucide="heart" class="w-3.5 h-3.5 text-pink-400 fill-pink-400"></i>
                         <span>A Letter From My Heart</span>
                     </div>
-                    <h2 class="font-heading text-2xl sm:text-4xl font-extrabold text-white">Surat Cinta & Doa Awet LDR ✉️✨</h2>
+                    <h2 class="font-heading text-2xl sm:text-4xl font-extrabold text-white">Surat Cinta & Doa ✉️✨</h2>
+                </div>
+
+                <!-- MOD 3: 2 Frame Foto Berdampingan -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="glass-card p-2 rounded-2xl border border-white/20 transform rotate-[-2deg] hover:rotate-0 transition duration-300">
+                        <!-- Tinggal ganti tulisan 'foto1.jpg' pake nama file foto lu -->
+                        <img src="foto1.jpg" alt="Our Memory 1" class="w-full aspect-square object-cover rounded-xl shadow-lg" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83164ba?w=500&auto=format&fit=crop&q=60'">
+                    </div>
+                    <div class="glass-card p-2 rounded-2xl border border-white/20 transform rotate-[2deg] hover:rotate-0 transition duration-300">
+                        <!-- Tinggal ganti tulisan 'foto2.jpg' pake nama file foto lu -->
+                        <img src="foto2.jpg" alt="Our Memory 2" class="w-full aspect-square object-cover rounded-xl shadow-lg" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=500&auto=format&fit=crop&q=60'">
+                    </div>
                 </div>
 
                 <!-- Exact Wording Paragraphs -->
@@ -644,6 +657,26 @@
             setupSlideScrollListener();
         });
 
+        // MOD 2: Helper untuk stop semua video & lanjutin music 
+        function pauseAllVideosAndResumeMusic() {
+            let videoWasPlaying = false;
+            for (let i = 1; i <= 10; i++) {
+                const vid = document.getElementById(`jjVideo${i}`);
+                const icon = document.getElementById(`playIcon${i}`);
+                if (vid && !vid.paused) {
+                    vid.pause();
+                    videoWasPlaying = true;
+                    if (icon) icon.style.opacity = '1';
+                }
+            }
+            
+            // Resume music jika sebelumnya state memang play
+            const bgAudio = document.getElementById('bgMusic');
+            if (isMusicPlaying && bgAudio && bgAudio.paused) {
+                bgAudio.play().catch(e => console.log(e));
+            }
+        }
+
         // Horizontal Slide Navigation Functions
         function goToSlide(index) {
             if (index < 0 || index >= totalSlides) return;
@@ -658,6 +691,7 @@
                 });
             }
             updatePaginationDots(index);
+            pauseAllVideosAndResumeMusic(); // Execute pause/resume on slide change
         }
 
         function nextSlide() {
@@ -701,6 +735,7 @@
                     if (index !== currentSlide && index >= 0 && index < totalSlides) {
                         currentSlide = index;
                         updatePaginationDots(index);
+                        pauseAllVideosAndResumeMusic(); // Execute pause/resume on scroll swipe
                     }
                 }, 100);
             });
@@ -779,7 +814,7 @@
                 // Pause background music when playing JJ TikTok video for better experience
                 if (bgAudio && !bgAudio.paused) {
                     bgAudio.pause();
-                    updateMusicUI(false);
+                    // Biarkan UI Music tetep ON karena secara sistem dia ngga dimatiin user
                 }
 
                 video.play().then(() => {
@@ -791,6 +826,11 @@
             } else {
                 video.pause();
                 if (playIcon) playIcon.style.opacity = '1';
+                
+                // MOD 2: Auto Resume music pas manual pause video
+                if (isMusicPlaying && bgAudio && bgAudio.paused) {
+                    bgAudio.play().catch(e => console.log(e));
+                }
             }
         }
 
