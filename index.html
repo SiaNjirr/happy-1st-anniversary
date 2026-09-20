@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 1st Anniversary Sayang! 💖</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        genz: {
+                            pink: '#FF6B9D',
+                            purple: '#A259FF',
+                            cyan: '#00F0FF',
+                            dark: '#0B0B14',
+                            glass: 'rgba(255, 255, 255, 0.08)',
+                            glassBorder: 'rgba(255, 255, 255, 0.18)'
+                        }
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 4s infinite ease-in-out',
+                        'float': 'float 6s infinite ease-in-out',
+                        'bounce-subtle': 'bounceSubtle 2s infinite ease-in-out',
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+                            '50%': { opacity: '0.7', transform: 'scale(1.1)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' }
+                        },
+                        bounceSubtle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-6px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* Custom Scrollbar & Utility Classes */
+        body {
+            background-color: #080811;
+            color: #F3F4F6;
+            overflow-x: hidden;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Glassmorphism styling */
+        .glass-card {
+            background: rgba(23, 22, 38, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-card-bright {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        /* Hide scrollbars for slick look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Vertical video reel scroll snap */
+        .video-feed-container {
+            scroll-snap-type: y mandatory;
+        }
+        .video-feed-card {
+            scroll-snap-align: start;
+        }
+
+        /* Ambient glowing circles */
+        .glow-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Slide horizontal transitions */
+        .slides-container {
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+        }
+        .slide-item {
+            scroll-snap-align: start;
+            flex-shrink: 0;
+        }
+
+        /* Video ratio helper */
+        .aspect-tiktok {
+            aspect-ratio: 9 / 16;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen text-slate-100 selection:bg-pink-500 selection:text-white">
+
+    <!-- Ambient Aura Glow Background Effect -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="glow-blob w-[350px] h-[350px] sm:w-[500px] sm:h-[500px] bg-pink-600/30 top-[-10%] left-[-10%] animate-pulse-glow"></div>
+        <div class="glow-blob w-[300px] h-[300px] sm:w-[450px] sm:h-[450px] bg-purple-600/30 bottom-[-10%] right-[-10%] animate-pulse-glow" style="animation-delay: 2s;"></div>
+        <div class="glow-blob w-[250px] h-[250px] sm:w-[350px] sm:h-[350px] bg-cyan-500/20 top-[40%] left-[30%] animate-pulse-glow" style="animation-delay: 1s;"></div>
+    </div>
+
+    <!-- Background Music Audio Element -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support audio elements.
+    </audio>
+
+    <!-- Fixed Top Navigation & Control Bar -->
+    <header class="fixed top-0 left-0 right-0 z-50 px-4 py-3 sm:px-8 flex items-center justify-between pointer-events-none">
+        <div class="pointer-events-auto flex items-center gap-2 glass-card px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border border-white/20 shadow-lg backdrop-blur-md">
+            <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span>
+            <span class="bg-gradient-to-r from-pink-400 to-purple-300 bg-clip-text text-transparent font-bold">NUR FADHILA RAMADHANI</span>
+        </div>
+
+        <div class="pointer-events-auto flex items-center gap-2">
+            <!-- GitHub Info Modal Trigger Button -->
+            <button onclick="toggleGithubModal()" title="Panduan Upload GitHub" class="glass-card hover:bg-white/20 text-slate-200 p-2.5 rounded-full transition-all duration-300 active:scale-95 border border-white/20">
+                <i data-lucide="help-circle" class="w-5 h-5 text-cyan-400"></i>
+            </button>
+
+            <!-- Music Floating Toggle Button -->
+            <button id="musicToggleBtn" onclick="toggleMusic()" class="glass-card hover:bg-white/20 text-white p-2.5 rounded-full transition-all duration-300 active:scale-95 border border-pink-500/40 flex items-center gap-2 px-3.5">
+                <i id="musicIcon" data-lucide="disc" class="w-5 h-5 text-pink-400 animate-spin" style="animation-duration: 4s;"></i>
+                <span id="musicText" class="text-xs font-medium hidden sm:inline">Play Sound</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Slide Indicators / Pagination Dots -->
+    <div class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 glass-card px-4 py-2 rounded-full border border-white/20 shadow-2xl">
+        <button onclick="goToSlide(0)" class="slide-dot w-2.5 h-2.5 rounded-full bg-pink-500 transition-all duration-300" id="dot-0" aria-label="Slide 1"></button>
+        <button onclick="goToSlide(1)" class="slide-dot w-2.5 h-2.5 rounded-full bg-white/30 transition-all duration-300" id="dot-1" aria-label="Slide 2"></button>
+        <button onclick="goToSlide(2)" class="slide-dot w-2.5 h-2.5 rounded-full bg-white/30 transition-all duration-300" id="dot-2" aria-label="Slide 3"></button>
+        <button onclick="goToSlide(3)" class="slide-dot w-2.5 h-2.5 rounded-full bg-white/30 transition-all duration-300" id="dot-3" aria-label="Slide 4"></button>
+        <button onclick="goToSlide(4)" class="slide-dot w-2.5 h-2.5 rounded-full bg-white/30 transition-all duration-300" id="dot-4" aria-label="Slide 5"></button>
+    </div>
+
+    <!-- Navigation Arrow Controls for Desktop/Tablets -->
+    <button onclick="prevSlide()" class="fixed left-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex items-center justify-center w-11 h-11 glass-card hover:bg-white/20 text-white rounded-full transition-all border border-white/20 hover:scale-110 active:scale-95 shadow-xl">
+        <i data-lucide="chevron-left" class="w-6 h-6"></i>
+    </button>
+    <button onclick="nextSlide()" class="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex items-center justify-center w-11 h-11 glass-card hover:bg-white/20 text-white rounded-full transition-all border border-white/20 hover:scale-110 active:scale-95 shadow-xl">
+        <i data-lucide="chevron-right" class="w-6 h-6"></i>
+    </button>
+
+    <!-- Main Fullscreen Slides Container -->
+    <main id="slidesWrapper" class="slides-container flex w-full h-screen overflow-x-auto overflow-y-hidden no-scrollbar relative z-10">
+        
+        <!-- SLIDE 1: Welcome & Cover -->
+        <section id="slide-0" class="slide-item w-full h-full flex-none flex flex-col items-center justify-center p-6 text-center relative">
+            <div class="max-w-xl w-full glass-card p-8 sm:p-12 rounded-3xl relative overflow-hidden border border-white/20 shadow-2xl animate-float">
+                <!-- Aesthetic Gen-Z Pill Badge -->
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-500/20 border border-pink-500/40 text-pink-300 text-xs sm:text-sm font-semibold mb-6">
+                    <span>✨ Our 1st Anniversary Special</span>
+                </div>
+                
+                <h1 class="font-heading text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-tight mb-4 text-white">
+                    To My Favorite Person <br>
+                    <span class="bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">in the World 🌍❤️</span>
+                </h1>
+                
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-8 max-w-md mx-auto">
+                    Dari pertemuan random di Roblox sampai bertahan LDR sejauh ini. Ini kompilasi perjalanan lucu, manis, dan JJ TikTok nostalgia kita! 🥹✨
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button onclick="startJourney()" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 hover:from-pink-600 hover:to-cyan-600 text-white font-bold text-base sm:text-lg shadow-lg shadow-pink-500/30 transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-3 group">
+                        <span>Mulai Journey 🎵</span>
+                        <i data-lucide="sparkles" class="w-5 h-5 group-hover:rotate-12 transition-transform"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="absolute bottom-16 text-xs text-slate-400 animate-bounce-subtle flex items-center gap-1.5">
+                <span>Swipe atau klik panah untuk lanjut</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: Countdown & Cute Stats -->
+        <section id="slide-1" class="slide-item w-full h-full flex-none flex flex-col items-center justify-center p-6 text-center relative">
+            <div class="max-w-2xl w-full glass-card p-6 sm:p-10 rounded-3xl border border-white/20 shadow-2xl my-auto">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple-500/20 border border-purple-500/30 text-purple-300 text-xs font-semibold mb-4">
+                    <i data-lucide="heart" class="w-3.5 h-3.5 text-pink-400 fill-pink-400"></i>
+                    <span>Counting Every Single Second With You</span>
+                </div>
+
+                <h2 class="font-heading text-2xl sm:text-4xl font-bold mb-2">Anniversary Counter ⏳✨</h2>
+                <p class="text-slate-400 text-xs sm:text-sm mb-6">Waktu berjalan sejak hari pertama kita jadian & komitmen bareng</p>
+
+                <!-- Timer Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8">
+                    <div class="glass-card-bright p-4 rounded-2xl text-center border border-white/10">
+                        <span id="counterDays" class="block font-heading text-2xl sm:text-4xl font-extrabold text-pink-400">365</span>
+                        <span class="text-xs uppercase tracking-wider text-slate-300 font-medium">Hari</span>
+                    </div>
+                    <div class="glass-card-bright p-4 rounded-2xl text-center border border-white/10">
+                        <span id="counterHours" class="block font-heading text-2xl sm:text-4xl font-extrabold text-purple-400">00</span>
+                        <span class="text-xs uppercase tracking-wider text-slate-300 font-medium">Jam</span>
+                    </div>
+                    <div class="glass-card-bright p-4 rounded-2xl text-center border border-white/10">
+                        <span id="counterMins" class="block font-heading text-2xl sm:text-4xl font-extrabold text-cyan-400">00</span>
+                        <span class="text-xs uppercase tracking-wider text-slate-300 font-medium">Menit</span>
+                    </div>
+                    <div class="glass-card-bright p-4 rounded-2xl text-center border border-white/10">
+                        <span id="counterSecs" class="block font-heading text-2xl sm:text-4xl font-extrabold text-emerald-400">00</span>
+                        <span class="text-xs uppercase tracking-wider text-slate-300 font-medium">Detik</span>
+                    </div>
+                </div>
+
+                <!-- Cute Stats Badges -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div class="glass-card p-3.5 rounded-xl text-left flex items-center gap-3">
+                        <div class="p-2.5 rounded-lg bg-pink-500/20 text-pink-400"><i data-lucide="gamepad-2" class="w-5 h-5"></i></div>
+                        <div>
+                            <p class="text-xs text-slate-400">Roblox Memories</p>
+                            <p class="text-xs font-bold text-slate-200">Awal Mula Cerita 🎮</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-3.5 rounded-xl text-left flex items-center gap-3">
+                        <div class="p-2.5 rounded-lg bg-purple-500/20 text-purple-400"><i data-lucide="video" class="w-5 h-5"></i></div>
+                        <div>
+                            <p class="text-xs text-slate-400">Koleksi JJ TikTok</p>
+                            <p class="text-xs font-bold text-slate-200">10 Video Spesial 🎬</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-3.5 rounded-xl text-left flex items-center gap-3">
+                        <div class="p-2.5 rounded-lg bg-cyan-500/20 text-cyan-400"><i data-lucide="plane" class="w-5 h-5"></i></div>
+                        <div>
+                            <p class="text-xs text-slate-400">Status Hubungan</p>
+                            <p class="text-xs font-bold text-slate-200">LDR Pejuang Meet ✈️</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <button onclick="goToSlide(2)" class="px-6 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold tracking-wide transition border border-white/20 inline-flex items-center gap-2">
+                        <span>Lihat Video First Meet Roblox</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: First Meet Roblox (jj1.mp4) -->
+        <section id="slide-2" class="slide-item w-full h-full flex-none flex flex-col items-center justify-center p-4 sm:p-6 relative">
+            <div class="max-w-4xl w-full glass-card p-4 sm:p-8 rounded-3xl border border-white/20 shadow-2xl flex flex-col md:flex-row items-center gap-6 my-auto max-h-[88vh] overflow-y-auto no-scrollbar">
+                
+                <!-- TikTok Style Phone Frame (jj1.mp4) -->
+                <div class="w-full md:w-1/2 flex justify-center">
+                    <div class="relative w-[240px] sm:w-[270px] aspect-tiktok rounded-2xl overflow-hidden shadow-2xl border-2 border-white/20 bg-slate-900 group">
+                        <!-- TikTok Header Overlay -->
+                        <div class="absolute top-0 left-0 right-0 p-3 bg-gradient-to-b from-black/70 to-transparent z-20 flex justify-between items-center text-xs text-white">
+                            <span class="font-bold flex items-center gap-1"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-pink-400"></i> JJ Roblox First Meet</span>
+                            <span class="bg-pink-500/80 px-2 py-0.5 rounded-full text-[10px]">#1 From 10</span>
+                        </div>
+
+                        <!-- Video Player -->
+                        <video id="jjVideo1" class="w-full h-full object-cover cursor-pointer" playsinline loop onclick="togglePlayVideo('jjVideo1', 'playIcon1')">
+                            <source src="jj1.mp4" type="video/mp4">
+                            Your browser does not support HTML5 video.
+                        </video>
+
+                        <!-- Video Controls / Custom Overlay -->
+                        <div id="playIcon1" onclick="togglePlayVideo('jjVideo1', 'playIcon1')" class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition cursor-pointer z-10">
+                            <div class="w-12 h-12 rounded-full bg-pink-500/80 backdrop-blur-md flex items-center justify-center text-white shadow-lg transform group-hover:scale-110 transition">
+                                <i data-lucide="play" class="w-6 h-6 fill-white ml-0.5"></i>
+                            </div>
+                        </div>
+
+                        <!-- TikTok Side Interactions Mock -->
+                        <div class="absolute right-2 bottom-12 flex flex-col gap-3 items-center z-20 text-white text-xs">
+                            <div class="flex flex-col items-center">
+                                <button onclick="toggleHeart(this)" class="p-2 bg-black/40 rounded-full backdrop-blur-sm"><i data-lucide="heart" class="w-4 h-4 text-pink-400"></i></button>
+                                <span class="text-[10px]">999k</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <button class="p-2 bg-black/40 rounded-full backdrop-blur-sm"><i data-lucide="message-circle" class="w-4 h-4 text-cyan-400"></i></button>
+                                <span class="text-[10px]">365</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story Caption Box -->
+                <div class="w-full md:w-1/2 text-left">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-500/20 text-pink-300 text-xs font-semibold mb-3">
+                        <i data-lucide="gamepad" class="w-3.5 h-3.5"></i>
+                        <span>First Meet Memory</span>
+                    </div>
+
+                    <h3 class="font-heading text-2xl sm:text-3xl font-bold mb-3 text-white">Momen Pertama Foto Bareng 🎮🥹</h3>
+
+                    <div class="glass-card-bright p-4 sm:p-5 rounded-2xl border border-white/15 mb-4 space-y-3">
+                        <p class="text-sm text-slate-200 leading-relaxed font-medium">
+                            "First meet di Roblox 🎮✨ Pas ngajak foto bareng walau avatar aku jelek banget waktu itu, tapi dari sinilah obrolan manis kita dimulai! 🥹❤️"
+                        </p>
+                        <p class="text-xs text-slate-400 italic">
+                            *Padahal avatarnya masih polos banget, tapi untung kamu responnya ramah banget yaa wkwk!*
+                        </p>
+                    </div>
+
+                    <div class="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-white/10">
+                        <span class="flex items-center gap-1.5"><i data-lucide="music" class="w-3.5 h-3.5 text-pink-400"></i> Original Sound - Jedag Jedug Roblox</span>
+                        <button onclick="goToSlide(3)" class="text-pink-400 hover:text-pink-300 font-semibold flex items-center gap-1">
+                            <span>Masa PDKT</span>
+                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SLIDE 4: PDKT Era (9 JJ Videos: jj2.mp4 - jj10.mp4) -->
+        <section id="slide-3" class="slide-item w-full h-full flex-none flex flex-col items-center justify-center p-3 sm:p-6 relative">
+            <div class="max-w-5xl w-full glass-card p-4 sm:p-6 rounded-3xl border border-white/20 shadow-2xl flex flex-col h-[88vh]">
+                
+                <!-- Section Header -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 pb-3 border-b border-white/10 flex-none">
+                    <div>
+                        <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-semibold mb-1">
+                            <i data-lucide="flame" class="w-3.5 h-3.5"></i>
+                            <span>PDKT Era Collection</span>
+                        </div>
+                        <h3 class="font-heading text-xl sm:text-2xl font-bold text-white">9 Random JJ TikTok Masa PDKT 🔥🎬</h3>
+                    </div>
+                    <p class="text-xs text-slate-400">Scroll ke bawah di box untuk lihat semua 9 video JJ</p>
+                </div>
+
+                <!-- TikTok Grid Feed Container -->
+                <div class="video-feed-container flex-1 overflow-y-auto no-scrollbar space-y-6 pr-1">
+                    
+                    <!-- Dynamic Video Grid Items (jj2 to jj10) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+                        <!-- Video Card Template 2 -->
+                        <div class="glass-card-bright p-3 rounded-2xl border border-white/15 flex flex-col items-center">
+                            <div class="relative w-full aspect-tiktok max-h-[260px] rounded-xl overflow-hidden bg-slate-900 group">
+                                <span class="absolute top-2 left-2 z-20 bg-pink-500/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                    Masa PDKT 🫣
+                                </span>
+                                <video id="jjVideo2" class="w-full h-full object-cover cursor-pointer" playsinline loop onclick="togglePlayVideo('jjVideo2', 'playIcon2')">
+                                    <source src="jj2.mp4" type="video/mp4">
+                                </video>
+                                <div id="playIcon2" onclick="togglePlayVideo('jjVideo2', 'playIcon2')" class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition cursor-pointer z-10">
+                                    <div class="w-10 h-10 rounded-full bg-pink-500/80 flex items-center justify-center text-white"><i data-lucide="play" class="w-5 h-5 fill-white ml-0.5"></i></div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mt-2.5 font-medium text-center line-clamp-1">"Awal-awal PDKT masih malu-malu cat 🐱"</p>
+                        </div>
+
+                        <!-- Video Card Template 3 -->
+                        <div class="glass-card-bright p-3 rounded-2xl border border-white/15 flex flex-col items-center">
+                            <div class="relative w-full aspect-tiktok max-h-[260px] rounded-xl overflow-hidden bg-slate-900 group">
+                                <span class="absolute top-2 left-2 z-20 bg-purple-500/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                    Sok Jual Mahal Bgt 🤪
+                                </span>
+                                <video id="jjVideo3" class="w-full h-full object-cover cursor-pointer" playsinline loop onclick="togglePlayVideo('jjVideo3', 'playIcon3')">
+                                    <source src="jj3.mp4" type="video/mp4">
+                                </video>
+                                <div id="playIcon3" onclick="togglePlayVideo('jjVideo3', 'playIcon3')" class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition cursor-pointer z-10">
+                                    <div class="w-10 h-10 rounded-full bg-purple-500/80 flex items-center justify-center text-white"><i data-lucide="play" class="w-5 h-5 fill-white ml-0.5"></i></div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mt-2.5 font-medium text-center line-clamp-1">"Balas chat lama padahal ditinggal scroll tiktok 😂"</p>
+                        </div>
+
+                        <!-- Video Card Template 4 -->
+                        <div class="glass-card-bright p-3 rounded-2xl border border-white/15 flex flex-col items-center">
+                            <div class="relative w-full aspect-tiktok max-h-[260px] rounded-xl overflow-hidden bg-slate-900 group">
+                                <span class="absolute top-2 left-2 z-20 bg-cyan-500/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                    Random JJ Moment 🎬
+                                </span>
+                                <video id="jjVideo4" class="w-full h-full object-cover cursor-pointer" playsinline loop onclick="togglePlayVideo('jjVideo4', 'playIcon4')">
+                                    <source src="jj4.mp4" type="video/mp4">
+                                </video>
+                                <div id="playIcon4" onclick="togglePlayVideo('jjVideo4', 'playIcon4')" class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition cursor-pointer z-10">
+                                    <div class="w-10 h-10 rounded-full bg-cyan-500/80 flex items-center justify-center text-white"><i data-lucide="play" class="w-5 h-5 fill-white ml-0.5"></i></div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mt-2.5 font-medium text-center line-clamp-1">"JJ preset viral pas sering begadang telfonan ✨"</p>
+                        </div>
+
+                        <!-- Video Card Template 5 -->
+                        <div class="glass-card-bright p-3 rounded-2xl border border-white/15 flex flex-col items-center">
+                            <div class="relative w-full aspect-tiktok max-h-[260px] rounded-xl overflow-hidden bg-slate-900 group">
+                                <span class="absolute top-2 left-2 z-20 bg-emerald-500/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                    Salting BRUTAL 🫠
+                                </span>
+                                <video id="jjVideo5" class="w-full h-full object-cover cursor-pointer" playsinline loop onclick="togglePlayVideo('jjVideo5', 'playIcon5')">
+                                    <source src="jj5.mp4" type="video/mp4">
+                                </video>
+                                <div id="playIcon5" onclick="togglePlayVideo('jjVideo5', 'playIcon5')" class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition cursor-pointer z-10">
+                                    <div class="w-10 h-10 rounded-full bg-emerald-500/80 flex items-center justify-center text-white"><i data-lucide="play" class="w-5 h-5 fill-white ml-0.5"></i></div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mt-2.5 font-medium text-center line-clamp-1">"Pas kamu ketahuan salting waktu dipanggil sayang ❤️"</p>
+                        </div>
+
+                        <!-- Video Card Template 6 -->
+                        <div class="glass-card-bright p-3 rounded-2xl border border-white/15 flex flex-col items-center">
+                            <div class="relative w-full aspect-tiktok max-h-[260px] rounded-xl overflow-hidden bg-slate-900 group">
+                                <span class="absolute top-2 left-2 z-20 bg-pink-500/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                    Sound Trend CapCut 🎵
+                                </span>
+                                <video id="jjVideo6" class="w-full h-full object-cover cursor-pointer" playsinline loop onclick="togglePlayVideo('jjVideo6', 'playIcon6')">
+                                    <source src="jj6.mp4" type="video/mp4">
+                                </video>
+                                <div id="playIcon6" onclick="togglePlayVideo('jjVideo6', 'playIcon6')" class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition cursor-pointer z-10">
+                                    <div class="w-10 h-10 rounded-full bg-pink-500/80 flex items-center justify-center text-white"><i data-lucide="play" class="w-5 h-5 fill-white ml-0.5"></i></div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mt-2.5 font-medium text-center line-clamp-1">"Sound kesukaan yang sering dipake pas kirim pap ✨"</p>
+                        </div>
+
+                        <!-- Video Card Template 7 -->
+                        <div class="glass-card-bright p-3 rounded-2xl border border-white/15 flex flex-col items-center">
+                            <div class="relative w-full aspect-tiktok max-h-[260px] rounded-xl overflow-hidden bg-slate-900 group">
+                                <span class="absolute top-2 left-2 z-20 bg-amber-500/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                    Late Night Chat 🌙
+                                </span>
+                                <video id="jjVideo7" class="w-full h-full object-cover cursor-pointer" playsinline loop onclick="togglePlayVideo('jjVideo7', 'playIcon7')">
+                                    <source src="jj7.mp4" type="video/mp4">
+                                </video>
+                                <div id="playIcon7" onclick="togglePlayVideo('jjVideo7', 'playIcon7')" class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition cursor-pointer z-10">
+                                    <div class="w-10 h-10 rounded-full bg-amber-500/80 flex items-center justify-center text-white"><i data-lucide="play" class="w-5 h-5 fill-white ml-0.5"></i></div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mt-2.5 font-medium text-center line-clamp-1">"Masa-masa nemenin kamu kerja & OVT malam hari"</p>
+                        </div>
+
+                        <!-- Video Card Template 8 -->
+                        <div class="glass-card-bright p-3 rounded-2xl border border-white/15 flex flex-col items-center">
+                            <div class="relative w-full aspect-tiktok max-h-[260px] rounded-xl overflow-hidden bg-slate-900 group">
+                                <span class="absolute top-2 left-2 z-20 bg-indigo-500/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                    Bucin Maksimal 🫶
+                                </span>
+                                <video id="jjVideo8" class="w-full h-full object-cover cursor-pointer" playsinline loop onclick="togglePlayVideo('jjVideo8', 'playIcon8')">
+                                    <source src="jj8.mp4" type="video/mp4">
+                                </video>
+                                <div id="playIcon8" onclick="togglePlayVideo('jjVideo8', 'playIcon8')" class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition cursor-pointer z-10">
+                                    <div class="w-10 h-10 rounded-full bg-indigo-500/80 flex items-center justify-center text-white"><i data-lucide="play" class="w-5 h-5 fill-white ml-0.5"></i></div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mt-2.5 font-medium text-center line-clamp-1">"Udah mulai gak malu-malu lagi dan nyaman banget"</p>
+                        </div>
+
+                        <!-- Video Card Template 9 -->
+                        <div class="glass-card-bright p-3 rounded-2xl border border-white/15 flex flex-col items-center">
+                            <div class="relative w-full aspect-tiktok max-h-[260px] rounded-xl overflow-hidden bg-slate-900 group">
+                                <span class="absolute top-2 left-2 z-20 bg-rose-500/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                    Menjelang Jadian 💍
+                                </span>
+                                <video id="jjVideo9" class="w-full h-full object-cover cursor-pointer" playsinline loop onclick="togglePlayVideo('jjVideo9', 'playIcon9')">
+                                    <source src="jj9.mp4" type="video/mp4">
+                                </video>
+                                <div id="playIcon9" onclick="togglePlayVideo('jjVideo9', 'playIcon9')" class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition cursor-pointer z-10">
+                                    <div class="w-10 h-10 rounded-full bg-rose-500/80 flex items-center justify-center text-white"><i data-lucide="play" class="w-5 h-5 fill-white ml-0.5"></i></div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mt-2.5 font-medium text-center line-clamp-1">"Saling yakin buat LDR dan komitmen bareng 🥰"</p>
+                        </div>
+
+                        <!-- Video Card Template 10 -->
+                        <div class="glass-card-bright p-3 rounded-2xl border border-white/15 flex flex-col items-center sm:col-span-2 lg:col-span-1">
+                            <div class="relative w-full aspect-tiktok max-h-[260px] rounded-xl overflow-hidden bg-slate-900 group">
+                                <span class="absolute top-2 left-2 z-20 bg-fuchsia-500/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                    Masa Depan ✨
+                                </span>
+                                <video id="jjVideo10" class="w-full h-full object-cover cursor-pointer" playsinline loop onclick="togglePlayVideo('jjVideo10', 'playIcon10')">
+                                    <source src="jj10.mp4" type="video/mp4">
+                                </video>
+                                <div id="playIcon10" onclick="togglePlayVideo('jjVideo10', 'playIcon10')" class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition cursor-pointer z-10">
+                                    <div class="w-10 h-10 rounded-full bg-fuchsia-500/80 flex items-center justify-center text-white"><i data-lucide="play" class="w-5 h-5 fill-white ml-0.5"></i></div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mt-2.5 font-medium text-center line-clamp-1">"Siap melangkah ke tahun-tahun berikutnya!"</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Footer Navigation inside slide -->
+                <div class="mt-3 pt-3 border-t border-white/10 flex justify-end flex-none">
+                    <button onclick="goToSlide(4)" class="px-5 py-2 rounded-xl bg-pink-500 hover:bg-pink-600 text-white text-xs font-bold transition flex items-center gap-2 shadow-lg shadow-pink-500/20">
+                        <span>Lanjut ke Surat Cinta & Doa 💌</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SLIDE 5: Surat Cinta & Doa Awet LDR -->
+        <section id="slide-4" class="slide-item w-full h-full flex-none flex flex-col items-center justify-center p-4 sm:p-6 relative">
+            <div class="max-w-2xl w-full glass-card p-6 sm:p-10 rounded-3xl border border-white/20 shadow-2xl my-auto max-h-[88vh] overflow-y-auto no-scrollbar relative">
+                
+                <div class="text-center mb-6">
+                    <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-pink-500/20 border border-pink-500/40 text-pink-300 text-xs font-semibold mb-3">
+                        <i data-lucide="heart" class="w-3.5 h-3.5 text-pink-400 fill-pink-400"></i>
+                        <span>A Letter From My Heart</span>
+                    </div>
+                    <h2 class="font-heading text-2xl sm:text-4xl font-extrabold text-white">Surat Cinta & Doa Awet LDR ✉️✨</h2>
+                </div>
+
+                <!-- Exact Wording Paragraphs -->
+                <div class="space-y-4 text-slate-200 text-sm sm:text-base leading-relaxed text-left">
+                    <p class="glass-card-bright p-4 rounded-2xl border border-white/10">
+                        Ga kerasa ya kita udah lewatin <span class="text-pink-400 font-bold">365 hari</span> bareng... 🥹✨ Meskipun kita ketemunya di Roblox, dan memulai hubungan LDR langsung...
+                    </p>
+
+                    <!-- Main Highlighted Prayer Box -->
+                    <div class="glass-card p-5 sm:p-6 rounded-2xl border-2 border-pink-500/40 bg-gradient-to-br from-pink-950/40 via-purple-950/30 to-slate-900/60 shadow-xl relative overflow-hidden">
+                        <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-pink-500/10 rounded-full blur-xl pointer-events-none"></div>
+                        
+                        <p class="text-xs uppercase tracking-widest text-pink-400 font-bold mb-2 flex items-center gap-1.5">
+                            <i data-lucide="sparkles" class="w-4 h-4"></i>
+                            Doa & Harapan Hubungan Kita:
+                        </p>
+                        
+                        <p class="text-sm sm:text-base text-slate-100 font-medium leading-relaxed italic">
+                            "Semoga hubungan kita awet terus, langgeng, makin dewasa, <span class="bg-pink-500/30 px-1.5 py-0.5 rounded text-pink-300 font-bold uppercase text-xs">NO DRAMA</span> CLUB, tegur aku jika aku salah, ceritain semuanya ke akuu kalo ada yg bikin kamu kepikiran entah itu OVT atau KERJAAN atau yg lainnya, terus kalo ada masalah dalam hubungan kita harus di omongin baik" yah babe dan yg paling penting rezekinya dilancarin biar kita cepet bisa ketemuan secara real life ya... amin! ✈️🫶"
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Interactive Confetti / Celebration Button -->
+                <div class="mt-8 text-center space-y-4">
+                    <button onclick="triggerConfetti()" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 hover:opacity-95 text-white font-bold text-sm sm:text-base shadow-xl shadow-pink-500/25 transition transform hover:scale-105 active:scale-95 inline-flex items-center justify-center gap-2">
+                        <i data-lucide="party-popper" class="w-5 h-5"></i>
+                        <span>Luncurkan Love Confetti 🎉</span>
+                    </button>
+
+                    <div class="pt-4 border-t border-white/10 text-center">
+                        <h4 class="font-heading text-lg sm:text-xl font-bold bg-gradient-to-r from-pink-400 to-purple-300 bg-clip-text text-transparent">
+                            I Always Love You Sayang! ❤️
+                        </h4>
+                        <p class="text-xs text-slate-400 mt-1 font-semibold tracking-wider">
+                            Happy 1st Anniversary Cintakuu ✨
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- GitHub Upload Guide Modal -->
+    <div id="githubModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+        <div class="max-w-lg w-full glass-card p-6 sm:p-8 rounded-3xl border border-white/20 shadow-2xl relative max-h-[90vh] overflow-y-auto no-scrollbar">
+            
+            <button onclick="toggleGithubModal()" class="absolute top-4 right-4 p-2 text-slate-400 hover:text-white rounded-full bg-white/5 hover:bg-white/10">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="flex items-center gap-2 text-cyan-400 mb-3">
+                <i data-lucide="github" class="w-6 h-6"></i>
+                <h3 class="font-heading text-xl font-bold text-white">Cara Upload ke GitHub Pages 🚀</h3>
+            </div>
+
+            <p class="text-xs text-slate-300 mb-4 leading-relaxed">
+                Supaya website anniversary ini bisa diaksespacar kamu via link online gratis, ikuti langkah mudah berikut:
+            </p>
+
+            <div class="space-y-3 text-xs text-slate-200">
+                <div class="p-3 glass-card-bright rounded-xl border border-white/10">
+                    <p class="font-bold text-pink-400 mb-1">1. Struktur File Repository GitHub:</p>
+                    <p class="text-slate-300 font-mono text-[11px] bg-black/40 p-2 rounded mt-1">
+                        📁 my-anniversary/<br>
+                        ├── 📄 index.html (File HTML ini)<br>
+                        ├── 🎵 music.mp3 (Lagu latar)<br>
+                        ├── 🎬 jj1.mp4 (Roblox First Meet)<br>
+                        └── 🎬 jj2.mp4 s/d jj10.mp4 (9 Video PDKT)
+                    </p>
+                </div>
+
+                <div class="p-3 glass-card-bright rounded-xl border border-white/10">
+                    <p class="font-bold text-cyan-400 mb-1">2. Upload ke GitHub:</p>
+                    <ol class="list-decimal list-inside space-y-1 text-slate-300">
+                        <li>Buat Repository baru di GitHub (misal: <code class="text-pink-300">happy-1st-anniversary</code>).</li>
+                        <li>Upload file <code class="text-pink-300">index.html</code>, <code class="text-pink-300">music.mp3</code>, dan video <code class="text-pink-300">jj1.mp4</code> s/d <code class="text-pink-300">jj10.mp4</code>.</li>
+                        <li>Klik menu <b>Settings</b> &gt; <b>Pages</b>.</li>
+                        <li>Di bagian <i>Branch</i>, pilih <b>main / master</b> lalu Save.</li>
+                        <li>Tunggu 1-2 menit, link website siap dikirim ke pacar! ❤️</li>
+                    </ol>
+                </div>
+            </div>
+
+            <button onclick="toggleGithubModal()" class="w-full mt-5 py-2.5 bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-bold rounded-xl text-xs transition">
+                Paham & Siapkan File! 👍
+            </button>
+        </div>
+    </div>
+
+    <!-- Script Logic -->
+    <script>
+        // State variables
+        let currentSlide = 0;
+        const totalSlides = 5;
+        let isMusicPlaying = false;
+
+        // Initialize Lucide Icons
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            startCountdown();
+            setupSlideScrollListener();
+        });
+
+        // Horizontal Slide Navigation Functions
+        function goToSlide(index) {
+            if (index < 0 || index >= totalSlides) return;
+            currentSlide = index;
+            const wrapper = document.getElementById('slidesWrapper');
+            const targetSlide = document.getElementById(`slide-${index}`);
+            
+            if (wrapper && targetSlide) {
+                wrapper.scrollTo({
+                    left: targetSlide.offsetLeft,
+                    behavior: 'smooth'
+                });
+            }
+            updatePaginationDots(index);
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                goToSlide(currentSlide + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                goToSlide(currentSlide - 1);
+            }
+        }
+
+        function updatePaginationDots(activeIndex) {
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.getElementById(`dot-${i}`);
+                if (dot) {
+                    if (i === activeIndex) {
+                        dot.classList.remove('bg-white/30', 'w-2.5');
+                        dot.classList.add('bg-pink-500', 'w-6');
+                    } else {
+                        dot.classList.remove('bg-pink-500', 'w-6');
+                        dot.classList.add('bg-white/30', 'w-2.5');
+                    }
+                }
+            }
+        }
+
+        function setupSlideScrollListener() {
+            const wrapper = document.getElementById('slidesWrapper');
+            if (!wrapper) return;
+
+            let isScrolling;
+            wrapper.addEventListener('scroll', () => {
+                clearTimeout(isScrolling);
+                isScrolling = setTimeout(() => {
+                    const width = wrapper.clientWidth;
+                    const scrollLeft = wrapper.scrollLeft;
+                    const index = Math.round(scrollLeft / width);
+                    if (index !== currentSlide && index >= 0 && index < totalSlides) {
+                        currentSlide = index;
+                        updatePaginationDots(index);
+                    }
+                }, 100);
+            });
+        }
+
+        // Keyboard Arrow Key Navigation
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Music Controls
+        function startJourney() {
+            const audio = document.getElementById('bgMusic');
+            if (audio) {
+                audio.play().then(() => {
+                    isMusicPlaying = true;
+                    updateMusicUI(true);
+                }).catch(err => {
+                    console.log("Audio autoplay prevented by browser:", err);
+                });
+            }
+            goToSlide(1);
+        }
+
+        function toggleMusic() {
+            const audio = document.getElementById('bgMusic');
+            if (!audio) return;
+
+            if (isMusicPlaying) {
+                audio.pause();
+                isMusicPlaying = false;
+                updateMusicUI(false);
+            } else {
+                audio.play().then(() => {
+                    isMusicPlaying = true;
+                    updateMusicUI(true);
+                }).catch(err => {
+                    alert("Gagal memutar audio music.mp3. Pastikan file music.mp3 sudah ada di folder repository!");
+                });
+            }
+        }
+
+        function updateMusicUI(playing) {
+            const icon = document.getElementById('musicIcon');
+            const text = document.getElementById('musicText');
+
+            if (playing) {
+                if (icon) icon.classList.add('animate-spin');
+                if (text) text.innerText = 'Music Playing';
+            } else {
+                if (icon) icon.classList.remove('animate-spin');
+                if (text) text.innerText = 'Play Music';
+            }
+        }
+
+        // TikTok Video Player Controls
+        function togglePlayVideo(videoId, playIconId) {
+            const video = document.getElementById(videoId);
+            const playIcon = document.getElementById(playIconId);
+            const bgAudio = document.getElementById('bgMusic');
+
+            if (!video) return;
+
+            // Pause all other videos
+            for (let i = 1; i <= 10; i++) {
+                const otherVid = document.getElementById(`jjVideo${i}`);
+                const otherIcon = document.getElementById(`playIcon${i}`);
+                if (otherVid && otherVid !== video) {
+                    otherVid.pause();
+                    if (otherIcon) otherIcon.style.opacity = '1';
+                }
+            }
+
+            if (video.paused) {
+                // Pause background music when playing JJ TikTok video for better experience
+                if (bgAudio && !bgAudio.paused) {
+                    bgAudio.pause();
+                    updateMusicUI(false);
+                }
+
+                video.play().then(() => {
+                    if (playIcon) playIcon.style.opacity = '0';
+                }).catch(err => {
+                    console.log("Video play error:", err);
+                    alert(`Video ${videoId} belum ditemukan. Pastikan file MP4 sudah berada di folder sesuai nama (${videoId.replace('jjVideo', 'jj')}.mp4)!`);
+                });
+            } else {
+                video.pause();
+                if (playIcon) playIcon.style.opacity = '1';
+            }
+        }
+
+        // Anniversary Countdown Calculator (September 21 Base Date)
+        function startCountdown() {
+            // Target anniversary date (Set default to September 21)
+            const startDate = new Date('2025-09-21T00:00:00');
+
+            function updateCounter() {
+                const now = new Date();
+                const diff = now - startDate;
+
+                if (diff >= 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+                    const seconds = Math.floor((diff / 1000) % 60);
+
+                    document.getElementById('counterDays').innerText = days;
+                    document.getElementById('counterHours').innerText = String(hours).padStart(2, '0');
+                    document.getElementById('counterMins').innerText = String(minutes).padStart(2, '0');
+                    document.getElementById('counterSecs').innerText = String(seconds).padStart(2, '0');
+                }
+            }
+
+            updateCounter();
+            setInterval(updateCounter, 1000);
+        }
+
+        // Heart Interactive Toggle
+        function toggleHeart(btn) {
+            const icon = btn.querySelector('svg');
+            if (icon) {
+                if (icon.classList.contains('fill-pink-400')) {
+                    icon.classList.remove('fill-pink-400');
+                } else {
+                    icon.classList.add('fill-pink-400');
+                }
+            }
+        }
+
+        // Confetti Launcher Effect
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 120,
+                    spread: 80,
+                    origin: { y: 0.6 },
+                    colors: ['#FF6B9D', '#A259FF', '#00F0FF', '#FFFFFF']
+                });
+            }
+        }
+
+        // GitHub Modal Helper
+        function toggleGithubModal() {
+            const modal = document.getElementById('githubModal');
+            if (!modal) return;
+
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                setTimeout(() => modal.classList.remove('opacity-0'), 10);
+            } else {
+                modal.classList.add('opacity-0');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            }
+        }
+    </script>
+</body>
+</html>
